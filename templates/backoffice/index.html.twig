@@ -1,0 +1,12 @@
+{% extends './backoffice/layout.html.twig' %}
+{% block title %}Page d'accueil{% endblock %}
+{% block content_back %}
+<div class="d-flex justify-content-center">
+<h1 class="display-1 text-dark">Han ouais</h1>
+</div>
+{% endblock %}
+{% block additional_css %}
+{{ parent() }}
+{# <link rel="stylesheet" href="{{ url( '/assets/css/home.css') }}"> #}
+
+{% endblock %}

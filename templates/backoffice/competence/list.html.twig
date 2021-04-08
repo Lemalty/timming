@@ -1,0 +1,28 @@
+{% extends 'backoffice/layout.html.twig' %}
+{% block title %}liste des compétences{% endblock %}
+{% block content_back %}
+<h1 class="display-2">Liste des compétences</h1>
+<a href="{{ url( '/backoffice/competences/ajouter' ) }}" class="btn btn-primary">
+Ajouter une nouvelle compétence
+</a>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nom</th>
+      <th>%</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for competence in competences %}
+    <tr>
+      <th scope="row">{{ competence.id }}</th>
+      <td>{{ competence.nom }}</td>
+      <td>{{ competence.capacite }}%</td>    
+      <td><a href="{{ url( '/backoffice/competences/editer/' ) ~ competence.id }}" class="btn btn-outline btn-info"><i class="fas fa-edit"></i> éditer</a></td>
+      <td><a href="{{ url( '/backoffice/competences/effacer/' ) ~ competence.id }}" class="btn btn-outline btn-danger"><i class="fas fa-eraser"></i> supprimer</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

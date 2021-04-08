@@ -22,7 +22,7 @@ class HomeController extends AbstractController
         $tasksASC = $taskRepository->findBy([], ['deadline' => 'ASC']);
 
         // task en fonction de son id (inutile pour l'instant)
-        $task = $taskRepository->find(44);
+        $task = $taskRepository->find(52);
         // nom module de la task
         $module = $task->getModule();
         $moduleName = $module->getName();

@@ -1,0 +1,36 @@
+{% extends 'backoffice/layout.html.twig' %}
+{% block title %}Editer une compétence{% endblock %}
+{% block content_back %}
+<div class="container">
+  <h1 class="bg-primary text-white p-4">
+    Éditer une compétence
+  </h1>
+  <form action="{{ url( '/backoffice/competences/editer/' ~ competence.id) }}" method="POST" enctype="multipart/form-data">
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Nom de la compétence :</label>
+      <div class="col-6">
+        <input type="text" name="nom" class="form-control" value="{{ competence.nom }}" required/>
+      </div>
+    </div>
+
+  <div class="form-group row">
+      <label class="col-2 col-form-label">Capacité (en %) :</label>
+      <div class="col-8">
+        <input type="text" name="capacite" class="form-control" value="{{ competence.capacite }}" required/>
+      </div>
+    </div>
+    
+    <div class="form-group row">
+      <div class="offset-2">
+        <button class="btn btn-primary">
+          Modifier cette compétence
+        </button>
+        <a href="{{ url( '/backoffice/competences') }}" class="btn btn-link text-black-50">
+          Annuler
+        </a>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'backoffice/layout.html.twig' %}
+{% block title %}Ajouter une compétence{% endblock %}
+{% block content_back %}
+<h1> Ajouter une nouvelle compétence</h1>
+<form action="{{ url( '/backoffice/competences/ajouter') }}" enctype="multipart/form-data" method="POST">
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Nom de la compétence :</label>
+    <div class="col-8">
+      <input type="text" name="nom" class="form-control"  required/>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Capacité (en %) :</label>
+    <div class="col-8">
+      <input type="number" name="capacite" class="form-control" required/>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="offset-2">
+      <button class="btn btn-primary">Ajouter cette compétence</button>
+      <a href="{{ url( '/backoffice/competences') }}" class="btn btn-link">Annuler</a>
+    </div>
+
+  </div>
+</form>
+{% endblock %}

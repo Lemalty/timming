@@ -1,0 +1,82 @@
+{% extends 'backoffice/layout.html.twig' %}
+{% block title %}Page d'accueil{% endblock %}
+{% block content_back %}
+<h1>Tableau de bord</h1>
+<!-- [ Main Content ] start -->
+							<div class="row">
+
+								<!-- product profit start -->
+								<div class="col-xl-3 col-md-6">
+									<div class="card prod-p-card bg-c-green">
+										<div class="card-body">
+											<div class="row align-items-center m-b-25">
+												<div class="col">
+													<h6 class="m-b-5 text-white">Formules :</h6>
+													{% for formule in formules %}
+													<h3 class="m-b-0 text-white">{{formule.nbFormule}}</h5>
+													<h3 >{{formule.name}}</h4>
+													{%endfor%}
+												</div>
+												<div class="col-auto">
+													<i class="fas fa-dollar-sign text-c-green f-18"></i>
+												</div>
+											</div>
+											<p class="m-b-0 text-white">Formules du jour</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-3 col-md-6">
+									<div class="card prod-p-card bg-c-blue">
+										<div class="card-body">
+											<div class="row align-items-center m-b-25">
+												<div class="col">
+													<h6 class="m-b-5 text-white">Clients :</h6>
+													{% for client in clients %}
+													<h3 class="m-b-0 text-white">{{client.nbClients}}</h3>
+													{%endfor%}
+												</div>
+												<div class="col-auto">
+													<i class="fas fa-database text-c-blue f-18"></i>
+												</div>
+											</div>
+											<p class="m-b-0 text-white">Clients du jour</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-3 col-md-6">
+									<div class="card prod-p-card bg-c-red">
+										<div class="card-body">
+											<div class="row align-items-center m-b-25">
+												<div class="col">
+													<h6 class="m-b-5 text-white">Chiffre d'affaires :</h6>
+													{% for CA in chiffreAffaire %}
+													<h3 class="m-b-0 text-white">{{CA.ca}}€</h3>
+													{%endfor%}
+												</div>
+												<div class="col-auto">
+													<i class="fas fa-money-bill-alt text-c-red f-18"></i>
+												</div>
+											</div>
+											<p class="m-b-0 text-white">Chiffre d'affaires de la veille</p>
+										</div>
+									</div>
+								</div>
+<div> 
+<form action="{{ url( '/backoffice/covid/recherche') }}" enctype="multipart/form-data" method="POST">
+<div style="display:flex;margin-left:30vh">
+<input class="form-control input-sm chat-input"type="email" name="email" placeholder="Email" required/>
+<input  class="form-control input-sm chat-input" type="date" name="arrival_date" required/>
+<button class="btn btn-primary btn-sm" type="submit">Rechercher un client</button>
+</form>
+</div>
+</div>
+
+
+
+
+{% endblock %}
+{% block additional_css %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ url( '/assets/css/home.css') }}">
+
+{% endblock %}
