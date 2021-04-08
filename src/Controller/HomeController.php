@@ -21,19 +21,18 @@ class HomeController extends AbstractController
         // toutes les tasks avec la deadline asc
         $tasksASC = $taskRepository->findBy([], ['deadline' => 'ASC']);
 
-        // task en fonction de son id
-        $task = $taskRepository->find(0);
-
+        // task en fonction de son id (inutile pour l'instant)
+        $task = $taskRepository->find(44);
         // nom module de la task
         $module = $task->getModule();
         $moduleName = $module->getName();
 
         // compter le nombre de tasks
         $countTasks = count($allTasks);
-        $taskCount = $taskRepository->getCount();
+        $taskCount = $taskRepository->getCount(); 
 
         // task par groupe (ici tp3)
-        $tp3 = $groupRepository->findOneBy(['type' => 'TP3', 'semester' => '1']);
+        $tp3 = $groupRepository->findOneBy(['name' => 'TP3', 'semester' => '2']);
         $tp3Task = $tp3->getTasks(); 
 
         return $this->render('task/index.html.twig', [
