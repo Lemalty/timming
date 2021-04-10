@@ -47,10 +47,12 @@ class BackofficeTaskController extends AbstractController
     {
         // dd($request->request);
         $task = new Task();
+        $deadline = new \DateTime($request->request->get('deadline'));
+        // $deadline = $request->request->(new \DateTime(get('deadline')));
         // renseigner les informations
         $task->setDescription($request->request->get('description'))
          ->setGroupOfTask($request->request->get('groupOfTask'))
-         ->setDeadline($request->request->get('deadline'))
+         ->setDeadline($deadline)
          ->setTeacher($request->request->get('teacher'))
          ->setModule($request->request->get('module'));
         // persister l'entité
