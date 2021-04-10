@@ -1,68 +1,64 @@
 {% extends 'backoffice/layout.html.twig' %}
 {% block title %}Editer une formule{% endblock %}
 {% block content_back %}
-<div class="container">
-  <h1 class="bg-primary text-white p-4">
-    Éditer une formule
-  </h1>
-  <form action="{{ url( '/backoffice/formules/editer/' ~ formula.id) }}" method="POST" enctype="multipart/form-data">
-
-    <div class="form-group row">
-      <label class="col-2 col-form-label">Nom de la formule :</label>
-      <div class="col-6">
-        <input type="text" name="name" class="form-control" value="{{ formula.name }}" />
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <label class="col-2 col-form-label">Description :</label>
-      <div class="col-8">
-        <input type="text" name="description" class="form-control" value="{{ formula.description }}" />
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <label class="col-2 col-form-label">Prix (en €) :</label>
-      <div class="col-8">
-        <input type="text" name="price" class="form-control" value="{{ formula.price }}" />
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <label class="col-2 col-form-label">Promo (en %) :</label>
-      <div class="col-8">
-        <input type="text" name="discount" class="form-control" value="{{ formula.discount }}" />
-      </div>
-    </div>
-
-    <div class="form-group row">
-    <label class="col-2 col-form-label">Active :</label>
+<h1> Editer une nouvelle formule</h1>
+<form action="{{ path('backoffice_task_update', { id: task.id }) }}" enctype="multipart/form-data" method="POST">
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Description de la tache :</label>
     <div class="col-8">
-      <input type="checkbox" name="enabled" class="form-control" value="1"/>
+      <input type="text" name="description" class="form-control" value="{{task.description}}" required/>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Groupe de travail :</label>
+    <div class="col-8">
+      <select name="group" class="form-select">
+        {% for group in groups %}
+        <option value={{ group.id }} {% if task.groupOfTask.id == group.id %} selected {% endif %}> {{ group.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Date de rendu :</label>
+    <div class="col-8">
+      <input type="datetime-local" name="deadline" class="form-control" value={{task.deadline|date()}} required/>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Enseignant :</label>
+    <div class="col-8">
+      <select name="teacher" class="form-select">
+        {% for teacher in teachers %}
+        <option value={{ teacher.id }} {% if task.teacher.id == teacher.id %} selected {% endif %}> {{ teacher.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Module :</label>
+    <div class="col-8">
+      <select name="module" class="form-select">
+        {% for module in modules %}
+        <option value={{ module.id }}{% if task.module.id == module.id %} selected {% endif %} > {{ module.name }}</option>
+        {% endfor %}
+      </select>
     </div>
   </div>
 
-    <div class="form-group row">
-      <label class="col-2 col-form-label">Illustration</label>
-      <div class="col-8">
-        <div class="custom-file">
-          <input name="illustration" type="file" class="custom-file-input" id="formulaIllustration">
-          <label class="custom-file-label" for="formulaIllustration" data-browse="Parcourir ...">Ajouter une
-            illustration</label>
-        </div>
-        <img id="imageResult" src="{{ asset( '/img/illustrations/' ~ formula.illustration ) }}" alt="" class="img-fluid rounded shadow-sm mx-auto d-block">
-      </div>
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Visible :</label>
+    <div class="col-8">
+      <input type="checkbox" name="visible" class="form-control" required/>
     </div>
-    <div class="form-group row">
-      <div class="offset-2">
-        <button class="btn btn-primary">
-          Modifier cette formule
-        </button>
-        <a href="{{ url( '/backoffice/formules') }}" class="btn btn-link text-black-50">
-          Annuler
-        </a>
-      </div>
+  </div>
+  <div class="form-group row">
+    <div class="offset-2">
+      <button class="btn btn-primary">Ajouter cette tache</button>
+      <a href="{{ path('backoffice_task_index') }}" class="btn btn-link">Annuler</a>
     </div>
-  </form>
-</div>
+
+  </div>
+</form>
 {% endblock %}

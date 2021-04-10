@@ -69,20 +69,51 @@ class BackofficeTaskController extends AbstractController
     /**
      * @Route("/backoffice/task/edit/{id}", name="backoffice_task_edit")
      */
-    public function edit(): Response
+    public function edit(EntityManagerInterface $em, $id): Response
     {
+        // dd($em->getRepository( Task::class )->find($id));
         return $this->render('backoffice_task/edit.html.twig', [
             'controller_name' => 'BackofficeTaskController',
+            'task' => $em->getRepository( Task::class )->find($id),
+            'teachers' => $em->getRepository( Teacher::class )->findAll(),
+            'groups' => $em->getRepository( Group::class )->findAll(),
+            'modules' => $em->getRepository( Module::class )->findAll(),
         ]);
     }
 
     /**
      * @Route("/backoffice/task/update/{id}", name="backoffice_task_update")
      */
-    public function update(): Response
+    public function update($id, EntityManagerInterface $em, Request $request, TeacherRepository $teacherRepository, ModuleRepository $moduleRepository, GroupRepository $groupRepository)
     {
-        return $this->render('backoffice_task/edit.html.twig', [
-            'controller_name' => 'BackofficeTaskController',
-        ]);
+        $task = $em->getRepository( Task::class )->find($id);
+        $deadline = new \DateTime($request->request->get('deadline'));
+        // dd($groupRepository->findOneBy(['id' => $request->request->get('group')]));
+        // renseigner les informations
+        $task->setDescription($request->request->get('description'))
+         ->setGroupOfTask($groupRepository->findOneBy(['id' => $request->request->get('group')]))
+         ->setDeadline($deadline)
+         ->setVisible($request->request->get('visible'))
+         ->setTeacher($teacherRepository->findOneBy(['id' => $request->request->get('teacher')]))
+         ->setModule($moduleRepository->findOneBy(['id' => $request->request->get('module')]));
+        // persister l'entité
+        $em->persist($task);
+        // déclencher le traitements SQL
+        $em->flush();
+        // redirection
+        return $this->redirectToRoute('backoffice_task_index');
+    }
+
+
+   /**
+     * @Route("/backoffice/task/delete/{id}", name="backoffice_task_delete")
+     */
+    public function delete(Task $task, EntityManagerInterface $em)
+    {
+        $em->remove($task);
+        // déclencher le traitements SQL
+        $em->flush();
+        // redirection
+        return $this->redirectToRoute('backoffice_task_index');
     }
 }

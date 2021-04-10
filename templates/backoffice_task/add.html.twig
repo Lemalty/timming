@@ -62,27 +62,3 @@
   </div>
 </form>
 {% endblock %}
-{% block additional_js %}
-<script>
-window.addEventListener('DOMContentLoaded', (event) => {
-
-  // afficher une image avant l'upload
-  $('#postIllustration').addEventListener('change', function() {
-    let input = this;
-    if (input.files && input.files[0]) {
-      let reader = new FileReader();
-
-      reader.onload = function(e) {
-        $('#imageResult').setAttribute('src', e.target.result);
-      };
-      reader.readAsDataURL(input.files[0]);
-    }
-  });
-
-  // compteur des caractères saisis
-  $('[name="content"]').addEventListener('keydown', function() {
-    $('#content_word_count').innerHTML = this.value.length;
-  });
-});
-</script>
-{% endblock %}
