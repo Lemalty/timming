@@ -6,6 +6,9 @@ use App\Entity\Task;
 use App\Entity\Group;
 use App\Entity\Module;
 use App\Entity\Teacher;
+use App\Repository\GroupRepository;
+use App\Repository\ModuleRepository;
+use App\Repository\TeacherRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,24 +46,24 @@ class BackofficeTaskController extends AbstractController
      * Enregistrer un nouvel article.
      * @Route("/backoffice/task/add", name="backoffice_task_save", methods="post")
      */
-    public function save(EntityManagerInterface $em, Request $request)
+    public function save(EntityManagerInterface $em, Request $request, TeacherRepository $teacherRepository, ModuleRepository $moduleRepository, GroupRepository $groupRepository)
     {
-        // dd($request->request);
         $task = new Task();
         $deadline = new \DateTime($request->request->get('deadline'));
-        // $deadline = $request->request->(new \DateTime(get('deadline')));
+        // dd($groupRepository->findOneBy(['id' => $request->request->get('group')]));
         // renseigner les informations
         $task->setDescription($request->request->get('description'))
-         ->setGroupOfTask($request->request->get('groupOfTask'))
+         ->setGroupOfTask($groupRepository->findOneBy(['id' => $request->request->get('group')]))
          ->setDeadline($deadline)
-         ->setTeacher($request->request->get('teacher'))
-         ->setModule($request->request->get('module'));
+         ->setVisible($request->request->get('visible'))
+         ->setTeacher($teacherRepository->findOneBy(['id' => $request->request->get('teacher')]))
+         ->setModule($moduleRepository->findOneBy(['id' => $request->request->get('module')]));
         // persister l'entité
         $em->persist($task);
         // déclencher le traitements SQL
         $em->flush();
         // redirection
-        return $this->redirectToRoute('post_index');
+        return $this->redirectToRoute('backoffice_task_index');
     }
 
     /**
