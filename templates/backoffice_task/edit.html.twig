@@ -1,0 +1,68 @@
+{% extends 'backoffice/layout.html.twig' %}
+{% block title %}Editer une formule{% endblock %}
+{% block content_back %}
+<div class="container">
+  <h1 class="bg-primary text-white p-4">
+    Éditer une formule
+  </h1>
+  <form action="{{ url( '/backoffice/formules/editer/' ~ formula.id) }}" method="POST" enctype="multipart/form-data">
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Nom de la formule :</label>
+      <div class="col-6">
+        <input type="text" name="name" class="form-control" value="{{ formula.name }}" />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Description :</label>
+      <div class="col-8">
+        <input type="text" name="description" class="form-control" value="{{ formula.description }}" />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Prix (en €) :</label>
+      <div class="col-8">
+        <input type="text" name="price" class="form-control" value="{{ formula.price }}" />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Promo (en %) :</label>
+      <div class="col-8">
+        <input type="text" name="discount" class="form-control" value="{{ formula.discount }}" />
+      </div>
+    </div>
+
+    <div class="form-group row">
+    <label class="col-2 col-form-label">Active :</label>
+    <div class="col-8">
+      <input type="checkbox" name="enabled" class="form-control" value="1"/>
+    </div>
+  </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Illustration</label>
+      <div class="col-8">
+        <div class="custom-file">
+          <input name="illustration" type="file" class="custom-file-input" id="formulaIllustration">
+          <label class="custom-file-label" for="formulaIllustration" data-browse="Parcourir ...">Ajouter une
+            illustration</label>
+        </div>
+        <img id="imageResult" src="{{ asset( '/img/illustrations/' ~ formula.illustration ) }}" alt="" class="img-fluid rounded shadow-sm mx-auto d-block">
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="offset-2">
+        <button class="btn btn-primary">
+          Modifier cette formule
+        </button>
+        <a href="{{ url( '/backoffice/formules') }}" class="btn btn-link text-black-50">
+          Annuler
+        </a>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

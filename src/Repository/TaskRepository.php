@@ -57,4 +57,18 @@ class TaskRepository extends ServiceEntityRepository
         ;
     }
     */
+
+        /**
+ * @return Category[] Returns an array
+ */
+ public function findDetailled()
+ {
+ $qb = $this->createQueryBuilder('c');
+ $qb->select('c', 'COUNT(c.id) n')
+ ->leftJoin('c.teacher', 'p')
+ ->groupBy('c.id');
+ return $qb
+ ->getQuery()
+ ->getResult();
+ }
 }
