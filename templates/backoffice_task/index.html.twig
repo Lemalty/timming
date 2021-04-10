@@ -25,8 +25,8 @@ Ajouter une nouvelle tache
       <td>{{ task.deadline|date() }} </td>
       <td>{{ task.teacher.name }}</td>      
       <td>{{ task.module.name }}</td>   
-      {# <td><a href="{{ path( 'post_delete', { id: task.id }) }}" class="btn btn-outline btn-info"><i class="fas fa-edit"></i> éditer</a></td> #}
-      {# <td><a href="{{ url( '/backoffice/formules/effacer/' ) ~ formula.id }}" class="btn btn-outline btn-danger"><i class="fas fa-eraser"></i> supprimer</a></td> #}
+      <td><a href="{{ path( 'backoffice_task_edit', { id: task.id }) }}" class="btn btn-outline btn-info"><i class="fas fa-edit"></i> éditer</a></td>
+      <td><a href="{{ path( 'backoffice_task_delete', { id: task.id }) }}}" class="btn btn-outline btn-danger"><i class="fas fa-eraser"></i> supprimer</a></td>
     </tr>
     {% endfor %}
   </tbody>
