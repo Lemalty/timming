@@ -1,0 +1,32 @@
+{% extends 'backoffice/layout.html.twig' %}
+{% block title %}Liste des enseignants{% endblock %}
+{% block content_back %}
+<h1 class="display-2">Liste des enseignants</h1>
+<a href="{{ path( 'backoffice_teacher_add')}}" class="btn btn-primary">
+Ajouter un nouvel enseignant
+</a>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nom</th>
+      <th>Modules associés</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for teacher in teachers %}
+    <tr>
+      <th scope="row">{{ teacher.id }}</th>
+      <td>{{ teacher.name }}</td>
+      <td>
+      {% for module in teacher.modules %}
+        <p>{{ module.name }}</p>
+      {% endfor %}
+      </td> 
+      {# <td><a href="{{ path( 'post_delete', { id: task.id }) }}" class="btn btn-outline btn-info"><i class="fas fa-edit"></i> éditer</a></td> #}
+      {# <td><a href="{{ url( '/backoffice/formules/effacer/' ) ~ formula.id }}" class="btn btn-outline btn-danger"><i class="fas fa-eraser"></i> supprimer</a></td> #}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
