@@ -88,7 +88,11 @@ class BackofficeTaskController extends AbstractController
     {
         $task = $em->getRepository( Task::class )->find($id);
         $deadline = new \DateTime($request->request->get('deadline'));
-        // dd($groupRepository->findOneBy(['id' => $request->request->get('group')]));
+        dd($request->request->get('visible'));
+        if(!isset($_POST['enabled']))
+    {
+      $_POST['enabled'] = 0;
+    }
         // renseigner les informations
         $task->setDescription($request->request->get('description'))
          ->setGroupOfTask($groupRepository->findOneBy(['id' => $request->request->get('group')]))
