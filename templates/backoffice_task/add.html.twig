@@ -46,6 +46,13 @@
       </select>
     </div>
   </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Visible :</label>
+    <div class="col-8">
+      <input type="checkbox" name="visible" class="form-control" required/>
+    </div>
+  </div>
   <div class="form-group row">
     <div class="offset-2">
       <button class="btn btn-primary">Ajouter cette tache</button>
@@ -54,28 +61,4 @@
 
   </div>
 </form>
-{% endblock %}
-{% block additional_js %}
-<script>
-window.addEventListener('DOMContentLoaded', (event) => {
-
-  // afficher une image avant l'upload
-  $('#postIllustration').addEventListener('change', function() {
-    let input = this;
-    if (input.files && input.files[0]) {
-      let reader = new FileReader();
-
-      reader.onload = function(e) {
-        $('#imageResult').setAttribute('src', e.target.result);
-      };
-      reader.readAsDataURL(input.files[0]);
-    }
-  });
-
-  // compteur des caractères saisis
-  $('[name="content"]').addEventListener('keydown', function() {
-    $('#content_word_count').innerHTML = this.value.length;
-  });
-});
-</script>
 {% endblock %}

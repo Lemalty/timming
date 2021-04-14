@@ -1,0 +1,31 @@
+{% extends 'backoffice/layout.html.twig' %}
+{% block title %}liste des utilisateurs{% endblock %}
+{% block content_back %}
+<h1 class="display-2">Liste des utilisateurs</h1>
+<a href="{{ path( 'backoffice_admin_add')}}" class="btn btn-primary">
+Ajouter un nouvel utilisateur
+</a>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users %}
+    <tr>
+      <th scope="row">{{ user.id }}</th>
+      <td>{{ user.email }}</td>
+      <td>{% if user.roles[0]=="ROLE_ADMIN" %}Admin{% elseif user.roles[0]=="ROLE_WRITER" %}Writer{% else %}Aucun rôle{% endif %}</td>
+      <td></td>
+      <td><a href="{{ path( 'backoffice_admin_edit', { id: user.id }) }}" class="btn btn-outline-secondary btn-sm">Editer</a></td>
+      <td><a href="{{ path( 'backoffice_admin_delete', { id: user.id }) }}" class="btn btn-outline-danger btn-sm">Effacer</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
