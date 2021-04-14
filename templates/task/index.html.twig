@@ -1,20 +1,149 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TaskController!{% endblock %}
+{% block title %}Projet TiMMIng{% endblock %}
+
+{% block stylesheets %}
+<style>
+    body{
+        background-color: #15202b;
+        color: white;
+    }
+    span{
+        color: white;
+    }
+    header{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+    }
+    header a{
+        text-decoration: none;
+        color: #fff;
+        background-color: #137daa;
+        padding: 7px 10px;
+        border-radius: .33rem;
+        border: 2px solid #143557;
+        position: absolute;
+        top: 15px;
+        right: 20px;
+    }
+    header a:hover{
+        text-decoration: none;
+        color: #fff;
+        background-color: #143557;
+        border: 2px solid #137daa;
+    }
+    header p{
+        font-size: 15px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .titre{
+        margin: 40px 0 60px;
+        font-weight: 900;
+    }
+    .align-middle{
+        vertical-align: middle !important;
+        text-align: center;
+    }
+    td, th{
+        padding: 30px 0 !important;
+    }
+    th{
+        font-size: 18px;
+        font-weight: 900;
+    }
+    tr:nth-child(even) {background: #15202b}
+    tr:nth-child(odd) {background: #0e161d}
+    .table{
+        background-color: #181818;
+        box-shadow: 0 -5px 14px 0px rgba(0,0,0,1);
+        -webkit-box-shadow: 0 -5px 14px 0px rgba(0,0,0,1);
+        -moz-box-shadow: 0 -5px 14px 0px rgba(0,0,0,1);
+    }
+    thead, tbody{
+        text-align: center;
+    }
+    .red{
+        color: #e74c3c;
+    }
+    .orange{
+        color: #f39c12;
+    }
+    .green{
+        color: #18bc9c;
+    }
+</style>
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<header>
+    <h1 class="titre">Projet TIMMING</h1>
+    <a href="/backoffice">Log-in</a>
+    <div class="container">
+    <div class="row">
+        <div class="col-4"><p class="red">Tâche pour aujourd'hui ou déjà passée</p></div>
+        <div class="col-4"><p class="orange">Tâche pour entre demain et 3 jours</p></div>
+        <div class="col-4"><p class="green">Tâche pour dans plus de 3 jours</p></div>
+    </div></div>
+</header>
+<main>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Professeur</th>
+                <th>Module</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td><span class="align-middle date">{{task.deadline|date('d/m/Y')}}</span></td>
+                <td><span class="align-middle">{{task.description}}</span></td>
+                <td><span class="align-middle">{{task.teacher}}</span></td>
+                <td><span class="align-middle">{{task.module}}</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</main>
+<script>
+    const dates = document.querySelectorAll(".date");
+    const now = Date.now();
+    let i;
+    let dateJs = new Array();
+    let result;
+    let dateFr;
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/dev/s4.sf/projet-TiMMIng/src/Controller/TaskController.php'|file_link(0) }}">src/Controller/TaskController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/dev/s4.sf/projet-TiMMIng/templates/task/index.html.twig'|file_link(0) }}">templates/task/index.html.twig</a></code></li>
-    </ul>
-</div>
+    for (i = 0; i < dates.length; i++) {
+        dateFr = dates[i].innerHTML.split('/')
+        dateJs = new Array();
+
+        /* Mettre la date dans le bon sens */
+        dateJs[0] = dateFr[2];
+        dateJs[1] = dateFr[1];
+        dateJs[2] = dateFr[0];
+
+        dateJs = new Date(dateJs);
+        result = dateJs.getTime() - now;
+
+        if(result < 0){
+            // Le délai est dépassé
+            dates[i].classList.add("red");
+        }else{
+            if(result < 259200000){
+                // Il reste moins de 3 jours
+                dates[i].classList.add("orange");
+            }else{
+                // Il reste plus de 3 jours
+                dates[i].classList.add("green");
+            }
+        }
+    }
+</script>
 {% endblock %}

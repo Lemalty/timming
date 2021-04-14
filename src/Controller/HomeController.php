@@ -15,16 +15,17 @@ class HomeController extends AbstractController
      */
     public function index(TaskRepository $taskRepository, GroupRepository $groupRepository): Response
     {
-       // toutes les les tasks
+        // toutes les les tasks
         $allTasks = $taskRepository->findAll();
-
+       
         // toutes les tasks avec la deadline asc
         $tasksASC = $taskRepository->findBy([], ['deadline' => 'ASC']);
-
+        
         // task en fonction de son id (inutile pour l'instant)
         $task = $taskRepository->find(52);
         // nom module de la task
         $module = $task->getModule();
+       
         $moduleName = $module->getName();
 
         // compter le nombre de tasks
@@ -36,7 +37,7 @@ class HomeController extends AbstractController
         $tp3Task = $tp3->getTasks(); 
 
         return $this->render('task/index.html.twig', [
-            'controller_name' => 'TaskController',
+            'tasks' => $taskRepository->findBy([], ['deadline' => 'ASC']),
         ]);
     }
 }
