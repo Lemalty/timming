@@ -1,0 +1,188 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projet TiMMIng{% endblock %}
+
+{% block stylesheets %}
+<style>
+    body{
+        background-color: #15202b;
+        color: white;
+    }
+    span{
+        color: white;
+    }
+    header{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+    }
+    header a {
+        text-decoration: none;
+        color: #fff;
+        background-color: #137daa;
+        padding: 7px 10px;
+        border-radius: .33rem;
+        border: 2px solid #143557;
+        position: absolute;
+        top: 15px;
+    }
+    header a:nth-child(2){
+        right: 20px;
+    }
+    header a:nth-child(3){
+        left: 20px;
+    }
+    header a:hover{
+        text-decoration: none;
+        color: #fff;
+        background-color: #143557;
+        border: 2px solid #137daa;
+    }
+    header p{
+        font-size: 15px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .titre{
+        margin: 40px 0 60px;
+        font-weight: 900;
+    }
+    .align-middle{
+        vertical-align: middle !important;
+        text-align: center;
+    }
+    td, th{
+        padding: 30px 0 !important;
+    }
+    th{
+        font-size: 18px;
+        font-weight: 900;
+    }
+    tr:nth-child(even) {background: #15202b}
+    tr:nth-child(odd) {background: #0e161d}
+    .table{
+        background-color: #181818;
+        box-shadow: 0 -5px 14px 0px rgba(0,0,0,1);
+        -webkit-box-shadow: 0 -5px 14px 0px rgba(0,0,0,1);
+        -moz-box-shadow: 0 -5px 14px 0px rgba(0,0,0,1);
+    }
+    thead, tbody{
+        text-align: center;
+    }
+    table{
+        background-color: rgb(18, 20, 20);
+        box-shadow: rgb(0 0 0) 0px -5px 14px 0px;
+    }
+    .table td, .table th {
+        border-top-color: rgb(56, 61, 63);
+    }
+    .red{
+        color: #e74c3c;
+    }
+    .orange{
+        color: #f39c12;
+    }
+    .green{
+        color: #18bc9c;
+    }
+    .table .thead-light th {
+        color: rgb(181, 175, 166);
+        background-color: rgb(35, 38, 39);
+        border-color: rgb(56, 61, 63);
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<header>
+    <h1 class="titre">Projet TIMMING</h1>
+    <a href="/backoffice">Log-in</a>
+    <a href="/home">Home</a>
+    <div class="container">
+        <div class="row">
+            <div class="col-4"><p class="red">Tâche pour aujourd'hui ou déjà passée</p></div>
+            <div class="col-4"><p class="orange">Tâche pour entre demain et 3 jours</p></div>
+            <div class="col-4"><p class="green">Tâche pour dans plus de 3 jours</p></div>
+        </div>
+    </div>
+</header>
+<main>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Professeur</th>
+                <th>Module</th>
+                <th>Groupe</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for TP in TPs %}
+            <tr>
+                <td><span class="align-middle date">{{TP.deadline|date('d/m/Y')}}</span></td>
+                <td><span class="align-middle">{{TP.description}}</span></td>
+                <td><span class="align-middle">{{TP.teacher}}</span></td>
+                <td><span class="align-middle">{{TP.module}}</span></td>
+                <td><span class="align-middle">{{TP.groupOfTask.name}}</span></td>
+            </tr>
+            {% endfor %}
+             {% for TD in TDs %}
+            <tr>
+                <td><span class="align-middle date">{{TD.deadline|date('d/m/Y')}}</span></td>
+                <td><span class="align-middle">{{TD.description}}</span></td>
+                <td><span class="align-middle">{{TD.teacher}}</span></td>
+                <td><span class="align-middle">{{TD.module}}</span></td>
+                <td><span class="align-middle">{{TD.groupOfTask.name}}</span></td>
+            </tr>
+            {% endfor %}
+             {% for CM in CMs %}
+            <tr>
+                <td><span class="align-middle date">{{CM.deadline|date('d/m/Y')}}</span></td>
+                <td><span class="align-middle">{{CM.description}}</span></td>
+                <td><span class="align-middle">{{CM.teacher}}</span></td>
+                <td><span class="align-middle">{{CM.module}}</span></td>
+                <td><span class="align-middle">{{CM.groupOfTask.name}}</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</main>
+<script>
+    const dates = document.querySelectorAll(".date");
+    const now = Date.now();
+    let i;
+    let dateJs = new Array();
+    let result;
+    let dateFr;
+
+    for (i = 0; i < dates.length; i++) {
+        dateFr = dates[i].innerHTML.split('/')
+        dateJs = new Array();
+
+        /* Mettre la date dans le bon sens */
+        dateJs[0] = dateFr[2];
+        dateJs[1] = dateFr[1];
+        dateJs[2] = dateFr[0];
+
+        dateJs = new Date(dateJs);
+        result = dateJs.getTime() - now;
+
+        if(result < 0){
+            // Le délai est dépassé
+            dates[i].classList.add("red");
+        }else{
+            if(result < 259200000){
+                // Il reste moins de 3 jours
+                dates[i].classList.add("orange");
+            }else{
+                // Il reste plus de 3 jours
+                dates[i].classList.add("green");
+            }
+        }
+    }
+</script>
+{% endblock %}

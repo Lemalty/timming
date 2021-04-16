@@ -8,9 +8,6 @@
         background-color: #15202b;
         color: white;
     }
-    span{
-        color: white;
-    }
     header{
         display: flex;
         justify-content: center;
@@ -35,11 +32,6 @@
         background-color: #143557;
         border: 2px solid #137daa;
     }
-    header p{
-        font-size: 15px;
-        text-align: center;
-        margin-bottom: 30px;
-    }
     .titre{
         margin: 40px 0 60px;
         font-weight: 900;
@@ -48,32 +40,22 @@
         vertical-align: middle !important;
         text-align: center;
     }
-    td, th{
-        padding: 30px 0 !important;
+    .list-group-item{
+        background-color: #0e161d ;
+        border: 1px solid rgba(0,0,0,.5);
     }
-    th{
-        font-size: 18px;
-        font-weight: 900;
+    .list-group{
+        -webkit-box-shadow: 5px 5px 15px 5px #000000; 
+        box-shadow: 5px 5px 15px 5px #000000;
     }
-    tr:nth-child(even) {background: #15202b}
-    tr:nth-child(odd) {background: #0e161d}
-    .table{
-        background-color: #181818;
-        box-shadow: 0 -5px 14px 0px rgba(0,0,0,1);
-        -webkit-box-shadow: 0 -5px 14px 0px rgba(0,0,0,1);
-        -moz-box-shadow: 0 -5px 14px 0px rgba(0,0,0,1);
+    h1{
+        margin-bottom: 20px;
     }
-    thead, tbody{
-        text-align: center;
+    a{
+        color:white !important;
     }
-    .red{
-        color: #e74c3c;
-    }
-    .orange{
-        color: #f39c12;
-    }
-    .green{
-        color: #18bc9c;
+    .list-group-item:hover, .list-group-item:focus{
+        background-color: #080808 !important;
     }
 </style>
 {% endblock %}
@@ -83,67 +65,29 @@
 <header>
     <h1 class="titre">Projet TIMMING</h1>
     <a href="/backoffice">Log-in</a>
-    <div class="container">
-    <div class="row">
-        <div class="col-4"><p class="red">Tâche pour aujourd'hui ou déjà passée</p></div>
-        <div class="col-4"><p class="orange">Tâche pour entre demain et 3 jours</p></div>
-        <div class="col-4"><p class="green">Tâche pour dans plus de 3 jours</p></div>
-    </div></div>
 </header>
 <main>
-    <table class="table">
-        <thead class="thead-light">
-            <tr>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Professeur</th>
-                <th>Module</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for task in tasks %}
-            <tr>
-                <td><span class="align-middle date">{{task.deadline|date('d/m/Y')}}</span></td>
-                <td><span class="align-middle">{{task.description}}</span></td>
-                <td><span class="align-middle">{{task.teacher}}</span></td>
-                <td><span class="align-middle">{{task.module}}</span></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <h1 class="text-center">MMI.1</h2>
+                <div class="list-group text-center">
+                    <a href="/home/mmi1/tp1" class='list-group-item list-group-item-action'>TP1</a>
+                    <a href="/home/mmi1/tp2" class='list-group-item list-group-item-action'>TP2</a>
+                    <a href="/home/mmi1/tp3" class='list-group-item list-group-item-action'>TP3</a>
+                    <a href="/home/mmi1/tp4" class='list-group-item list-group-item-action'>TP4</a>
+                </div>
+            </div>
+            <div class="col-6">
+                <h1 class="text-center">MMI.2</h2>
+                <div class="list-group text-center">
+                    <a href="/home/mmi2/tp1" class='list-group-item list-group-item-action'>TP1</a>
+                    <a href="/home/mmi2/tp2" class='list-group-item list-group-item-action'>TP2</a>
+                    <a href="/home/mmi2/tp3" class='list-group-item list-group-item-action'>TP3</a>
+                    <a href="/home/mmi2/tp4" class='list-group-item list-group-item-action'>TP4</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
-<script>
-    const dates = document.querySelectorAll(".date");
-    const now = Date.now();
-    let i;
-    let dateJs = new Array();
-    let result;
-    let dateFr;
-
-    for (i = 0; i < dates.length; i++) {
-        dateFr = dates[i].innerHTML.split('/')
-        dateJs = new Array();
-
-        /* Mettre la date dans le bon sens */
-        dateJs[0] = dateFr[2];
-        dateJs[1] = dateFr[1];
-        dateJs[2] = dateFr[0];
-
-        dateJs = new Date(dateJs);
-        result = dateJs.getTime() - now;
-
-        if(result < 0){
-            // Le délai est dépassé
-            dates[i].classList.add("red");
-        }else{
-            if(result < 259200000){
-                // Il reste moins de 3 jours
-                dates[i].classList.add("orange");
-            }else{
-                // Il reste plus de 3 jours
-                dates[i].classList.add("green");
-            }
-        }
-    }
-</script>
 {% endblock %}

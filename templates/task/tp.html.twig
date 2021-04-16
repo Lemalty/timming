@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projet TiMMIng{% endblock %}
+
+{% block stylesheets %}
+<style>
+    body{
+        background-color: #15202b;
+        color: white;
+    }
+    header{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+    }
+    header a{
+        text-decoration: none;
+        color: #fff;
+        background-color: #137daa;
+        padding: 7px 10px;
+        border-radius: .33rem;
+        border: 2px solid #143557;
+        position: absolute;
+        top: 15px;
+        right: 20px;
+    }
+    header a:hover{
+        text-decoration: none;
+        color: #fff;
+        background-color: #143557;
+        border: 2px solid #137daa;
+    }
+    .titre{
+        margin: 40px 0 60px;
+        font-weight: 900;
+    }
+    .align-middle{
+        vertical-align: middle !important;
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<header>
+    <h1 class="titre">TP</h1>
+    <a href="/backoffice">Log-in</a>
+</header>
+<main>
+</main>
+{% endblock %}
