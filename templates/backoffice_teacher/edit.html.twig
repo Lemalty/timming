@@ -1,13 +1,13 @@
 {% extends 'backoffice/layout.html.twig' %}
-{% block title %}Ajouter un enseignant{% endblock %}
+{% block title %}Modifier l'enseignant {{teacher.name}}{% endblock %}
 {% block content_back %}
-<h1>Ajouter un nouvel enseignant</h1>
-<form action="{{ path('backoffice_teacher_save') }}" enctype="multipart/form-data" method="POST">
+<h1>Modifier l'enseignant {{teacher.name}}</h1>
+<form action="{{ path('backoffice_teacher_update', {id: teacher.id}) }}" enctype="multipart/form-data" method="POST">
 
   <div class="form-group row">
     <label class="col-2 col-form-label">Nom :</label>
     <div class="col-2">
-      <input type="text" name="name" class="form-control"  required/>
+      <input type="text" name="name" class="form-control" value='{{teacher.name}}'  placeholder='{{teacher.name}}' required/>
     </div>
   </div>
 
@@ -24,7 +24,7 @@
 
   <div class="form-group row">
     <div class="offset-2">
-      <button class="btn btn-primary">Ajouter cet enseignant</button>
+      <button class="btn btn-primary">Modifier {{teacher.name}}</button>
       <a href="{{ path('backoffice_teacher_index') }}" class="btn btn-link">Annuler</a>
     </div>
   </div>

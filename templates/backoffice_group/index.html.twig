@@ -1,0 +1,33 @@
+{% extends 'backoffice/layout.html.twig' %}
+{% block title %}Liste des groupes{% endblock %}
+{% block content_back %}
+<h1 class="display-2">Liste des groupes</h1>
+<a href="{{ path( 'backoffice_group_add') }}" class="btn btn-primary">
+Ajouter un nouveau groupe
+</a>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nom</th>
+      <th>Semestre</th>
+      <th>Saison scolaire</th>
+      <th>Type</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for group in groups %}
+    <tr>
+      <th scope="row">{{ group.id }}</th>
+      <td>{{ group.name }}</td>
+      <td>{{ group.semester }}</td>
+      <td>{{ group.campain }}</td>
+      <td>{{ group.type }}</td>
+      <td><a href="{{ path( 'backoffice_group_edit', { id: group.id }) }}" class="btn btn-outline btn-info"><i class="fas fa-edit"></i> éditer</a> 
+      <a href="{{ path('backoffice_group_delete', {id: group.id}) }}" class="btn btn-outline btn-danger"><i class="fas fa-eraser"></i> supprimer</a></td> 
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

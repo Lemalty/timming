@@ -1,0 +1,53 @@
+{% extends 'backoffice/layout.html.twig' %}
+{% block title %}Ajouter un module{% endblock %}
+{% block content_back %}
+<h1>Ajouter un nouveau module</h1>
+<form action="{{ path('backoffice_module_save') }}" enctype="multipart/form-data" method="POST">
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Nom :</label>
+    <div class="col-2">
+      <input type="text" name="name" class="form-control"  required/>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Saison d'enseignement (YYYY-YYYY) :</label>
+    <div class="col-2">
+      <input type="text" maxlength="9" name="campain" class="form-control" required/>
+    </div>
+  </div>
+
+    <div class="form-group row">
+    <label class="col-2 col-form-label">Année scolaire :</label>
+    <div class="col-2">
+      <select type="text" name="year" class="form-control" required>
+        <option value='1' default>1</option>
+        <option value='2'>2</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Enseignant(s) associé(s) :</label>
+    <div class="col-8">
+      <select name="teacher" class="form-select" multiple>
+        {% for teacher in teachers %}
+        <option value='{{ teacher.id }}'> {{ teacher.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="offset-2">
+      <button class="btn btn-primary">Ajouter ce module</button>
+      <a href="{{ path('backoffice_module_index') }}" class="btn btn-link">Annuler</a>
+    </div>
+  </div>
+
+</form>
+{% endblock %}
+
+{% block additional_js %}
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'backoffice/layout.html.twig' %}
+{% block title %}Liste des modules{% endblock %}
+{% block content_back %}
+<h1 class="display-2">Liste des modules</h1>
+<a href="{{ path( 'backoffice_module_add') }}" class="btn btn-primary">
+Ajouter un nouveau module
+</a>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nom</th>
+      <th>Année d'enseignement</th>
+      <th>Saison scolaire</th>
+      <th>Enseignants associés</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for module in modules %}
+    <tr>
+      <th scope="row">{{ module.id }}</th>
+      <td>{{ module.name }}</td>
+      <td>{{ module.year }}</td>
+      <td>{{ module.campain }}</td>
+      <td>
+      {% for module in module.teachers %}
+        <p>{{ module.name }}</p>
+      {% endfor %}
+      </td> 
+      <td><a href="{{ path( 'backoffice_module_edit', { id: module.id }) }}" class="btn btn-outline btn-info"><i class="fas fa-edit"></i> éditer</a> 
+      <a href="{{ path('backoffice_module_delete', {id: module.id}) }}" class="btn btn-outline btn-danger"><i class="fas fa-eraser"></i> supprimer</a></td> 
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
