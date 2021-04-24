@@ -94,16 +94,11 @@ class BackofficeTeacherController extends AbstractController
         $teacher = $teacherRepository->find($id);
         // renseigner les informations
         $teacher->setName($request->request->get('name'));
+        
+        $newModule = $request->request->get('modules');
 
-        // on récupère les modules selectionnés
-        $allNewModules = $moduleRepository->findBy(['id' => $request->request->get('module')]);
-
-        // on ajoute les modules 1 par 1
-        // foreach($allNewModules as $newModule) {
-        //     $teacher->addModule($newModule);
-        // }
-
-        $teacher->setModules($allNewModules);
+        $teacher->addModule($newModule);
+    }
 
 
         // persister l'entité
@@ -112,7 +107,6 @@ class BackofficeTeacherController extends AbstractController
         $em->flush();
         // redirection
         return $this->redirectToRoute('backoffice_teacher_index');
-        }
     }
 
     /**
