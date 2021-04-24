@@ -47,144 +47,69 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/home/{year}/tp1", name="tp1")
+     * @Route("/home/{year}/{tpEtu}", name="tp", requirements={"year"="1|2", "tpEtu"="1|2|3|4"})
      */
-    public function tp1(TaskRepository $taskRepository, GroupRepository $groupRepository, $year): Response
+    public function tp(TaskRepository $taskRepository, GroupRepository $groupRepository, $year, $tpEtu): Response
     {
-        if($year === 'mmi1'){
-            $tp1 = $groupRepository->findOneBy(['name' => 'TP1', 'semester' => '2']);
-            $tp1Task = $tp1->getTasks(); 
-            $tda = $groupRepository->findOneBy(['name' => 'TDA', 'semester' => '2']);
-            $tdaTask = $tda->getTasks();
-            $cm = $groupRepository->findOneBy(['name' => 'CM', 'semester' => '2']);
-            $cmTask = $cm->getTasks(); 
-        
-            return $this->render('task/test.html.twig', [
-                'TPs' => $tp1Task,
-                'TDs' => $tdaTask,
-                'CMs' => $cmTask,
-            ]);
-        }else{
-            if($year === 'mmi2'){
-                $tp1 = $groupRepository->findOneBy(['name' => 'TP1', 'semester' => '4']);
-                $tp1Task = $tp1->getTasks(); 
-                $tda = $groupRepository->findOneBy(['name' => 'TDA', 'semester' => '4']);
-                $tdaTask = $tda->getTasks();
-                $cm = $groupRepository->findOneBy(['name' => 'CM', 'semester' => '4']);
-                $cmTask = $cm->getTasks(); 
-            
-                return $this->render('task/test.html.twig', [
-                    'TPs' => $tp1Task,
-                    'TDs' => $tdaTask,
-                    'CMs' => $cmTask,
-                ]);
+        //Vérification de l'année d'études
+        if($year == 1){
+            //Récupération des taches du TP demandé
+            $tp = $groupRepository->findOneBy(['name' => 'TP'.$tpEtu, 'semester' => '2']);
+            $tpTask = $tp->getTasks(); 
+            // dd($tpTask);
+            //Vérification du Tp demandé
+            if($tpEtu==1||$tpEtu==2)
+            {
+                //Récupération des taches du TD demandé
+                $td = $groupRepository->findOneBy(['name' => 'TDA', 'semester' => '2']);
+                $tdTask = $td->getTasks();
             }
+            else if($tpEtu==3||$tpEtu==4)
+            {
+                $td = $groupRepository->findOneBy(['name' => 'TDB', 'semester' => '2']);
+                $tdTask = $td->getTasks();
+            }
+            else{
+                dd("error");
+            }           
+            
+            //Récupération des taches de la promotion de première année
+            $cm = $groupRepository->findOneBy(['name' => 'CM', 'semester' => '2']);
+            $cmTask = $cm->getTasks();   
+
         }
         
-    }
-    /**
-     * @Route("/home/{year}/tp2", name="tp2")
-     */
-    public function tp2(TaskRepository $taskRepository, GroupRepository $groupRepository, $year): Response
-    {
-        if($year === 'mmi1'){
-            $tp2 = $groupRepository->findOneBy(['name' => 'TP2', 'semester' => '2']);
-            $tp2Task = $tp2->getTasks(); 
-            $tda = $groupRepository->findOneBy(['name' => 'TDA', 'semester' => '2']);
-            $tdaTask = $tda->getTasks();
-            $cm = $groupRepository->findOneBy(['name' => 'CM', 'semester' => '2']);
-            $cmTask = $cm->getTasks(); 
-        
-            return $this->render('task/test.html.twig', [
-                'TPs' => $tp2Task,
-                'TDs' => $tdaTask,
-                'CMs' => $cmTask,
-            ]);
-        }else{
-            if($year === 'mmi2'){
-                $tp2 = $groupRepository->findOneBy(['name' => 'TP2', 'semester' => '4']);
-                $tp2Task = $tp2->getTasks(); 
-                $tda = $groupRepository->findOneBy(['name' => 'TDA', 'semester' => '4']);
-                $tdaTask = $tda->getTasks();
-                $cm = $groupRepository->findOneBy(['name' => 'CM', 'semester' => '4']);
-                $cmTask = $cm->getTasks(); 
+        else{
+            if($year == 2){
+                 //Récupération des taches du TP demandé
+            $tp = $groupRepository->findOneBy(['name' => 'TP'.$tpEtu, 'semester' => '4']);
+            $tpTask = $tp->getTasks(); 
+            //Vérification du Tp demandé
+            if($tpEtu==1||$tpEtu==2)
+            {
+                //Récupération des taches du TD demandé
+                $td = $groupRepository->findOneBy(['name' => 'TDA', 'semester' => '4']);
+                $tdTask = $td->getTasks();
+            }
+            else if($tpEtu==3||$tpEtu==4)
+            {
+                $td = $groupRepository->findOneBy(['name' => 'TDB', 'semester' => '4']);
+                $tdTask = $td->getTasks();
+            }
+            else{
+                dd("error");
+            }           
             
-                return $this->render('task/test.html.twig', [
-                    'TPs' => $tp2Task,
-                    'TDs' => $tdaTask,
-                    'CMs' => $cmTask,
-                ]);
+            //Récupération des taches de la promotion de deuxième année
+            $cm = $groupRepository->findOneBy(['name' => 'CM', 'semester' => '4']);
+            $cmTask = $cm->getTasks();     
+               
             }
         }
-    }
-    /**
-     * @Route("/home/{year}/tp3", name="tp3")
-     */
-    public function tp3(TaskRepository $taskRepository, GroupRepository $groupRepository, $year): Response
-    {
-        if($year === 'mmi1'){
-            $tp3 = $groupRepository->findOneBy(['name' => 'TP3', 'semester' => '2']);
-            $tp3Task = $tp3->getTasks(); 
-            $tdb = $groupRepository->findOneBy(['name' => 'TDB', 'semester' => '2']);
-            $tdbTask = $tdb->getTasks();
-            $cm = $groupRepository->findOneBy(['name' => 'CM', 'semester' => '2']);
-            $cmTask = $cm->getTasks(); 
-        
-            return $this->render('task/test.html.twig', [
-                'TPs' => $tp3Task,
-                'TDs' => $tdbTask,
-                'CMs' => $cmTask,
-            ]);
-        }else{
-            if($year === 'mmi2'){
-                $tp3 = $groupRepository->findOneBy(['name' => 'TP3', 'semester' => '4']);
-                $tp3Task = $tp3->getTasks(); 
-                $tdb = $groupRepository->findOneBy(['name' => 'TDB', 'semester' => '4']);
-                $tdbTask = $tdb->getTasks();
-                $cm = $groupRepository->findOneBy(['name' => 'CM', 'semester' => '4']);
-                $cmTask = $cm->getTasks(); 
-            
-                return $this->render('task/test.html.twig', [
-                    'TPs' => $tp3Task,
-                    'TDs' => $tdbTask,
-                    'CMs' => $cmTask,
-                ]);
-            }
-        }
-    }
-    /**
-     * @Route("/home/{year}/tp4", name="tp4")
-     */
-    public function tp4(TaskRepository $taskRepository, GroupRepository $groupRepository, $year): Response
-    {
-        if($year === 'mmi1'){
-            $tp4 = $groupRepository->findOneBy(['name' => 'TP4', 'semester' => '2']);
-            $tp4Task = $tp4->getTasks(); 
-            $tdb = $groupRepository->findOneBy(['name' => 'TDB', 'semester' => '2']);
-            $tdbTask = $tdb->getTasks();
-            $cm = $groupRepository->findOneBy(['name' => 'CM', 'semester' => '2']);
-            $cmTask = $cm->getTasks(); 
-        
-            return $this->render('task/test.html.twig', [
-                'TPs' => $tp4Task,
-                'TDs' => $tdbTask,
-                'CMs' => $cmTask,
-            ]);
-        }else{
-            if($year === 'mmi2'){
-                $tp4 = $groupRepository->findOneBy(['name' => 'TP4', 'semester' => '4']);
-                $tp4Task = $tp4->getTasks(); 
-                $tdb = $groupRepository->findOneBy(['name' => 'TDB', 'semester' => '4']);
-                $tdbTask = $tdb->getTasks();
-                $cm = $groupRepository->findOneBy(['name' => 'CM', 'semester' => '4']);
-                $cmTask = $cm->getTasks(); 
-            
-                return $this->render('task/test.html.twig', [
-                    'TPs' => $tp4Task,
-                    'TDs' => $tdbTask,
-                    'CMs' => $cmTask,
-                ]);
-            }
-        }
-    }
+        return $this->render('task/test.html.twig', [
+            'TPs' => $tpTask,
+            'TDs' => $tdTask,
+            'CMs' => $cmTask,
+        ]);       
+    }    
 }
