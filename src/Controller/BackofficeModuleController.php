@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class BackofficeModuleController extends AbstractController
 {
      /**
-     * @Route("/backoffice/modules", name="backoffice_module_index")
+     * @Route("/backoffice/module", name="backoffice_module_index")
      */
     public function index(ModuleRepository $moduleRepository): Response
     {

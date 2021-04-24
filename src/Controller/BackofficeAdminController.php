@@ -31,7 +31,8 @@ class BackofficeAdminController extends AbstractController
     public function add(EntityManagerInterface $em): Response
     {
         return $this->render('backoffice_admin/add.html.twig', [
-            'controller_name' => 'BackofficeAdminController',            
+            'controller_name' => 'BackofficeAdminController',     
+            'user' => $em->getRepository( User::class )->find($id),       
         ]);
     }
 

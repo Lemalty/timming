@@ -17,12 +17,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class BackofficeGroupController extends AbstractController
 {
     /**
-     * @Route("/backoffice/groupes", name="backoffice_group_index")
+     * @Route("/backoffice/groupe", name="backoffice_group_index")
      */
     public function index(GroupRepository $groupRepository): Response
     {
         return $this->render('backoffice_group/index.html.twig', [
             'groups' => $groupRepository->findAll(),
+            'user' => $em->getRepository( User::class )->find($id),
         ]);
     }
 
@@ -31,7 +32,9 @@ class BackofficeGroupController extends AbstractController
      */
     public function add(): Response
     {
-        return $this->render('backoffice_group/add.html.twig');
+        return $this->render('backoffice_group/add.html.twig', [
+            'user' => $em->getRepository( User::class )->find($id),
+        ]);
     }
 
     /**

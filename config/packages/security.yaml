@@ -39,7 +39,24 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
-    - { path: ^/backoffice, roles: [ROLE_ADMIN, ROLE_WRITER] }
+    - { path: ^/backoffice/admin, roles: [ROLE_ADMIN] }
+    - { path: ^/backoffice/admin/add, roles: [ROLE_ADMIN] }
+    - { path: ^/backoffice/admin/edit, roles: [ROLE_ADMIN] }
+    - { path: ^/backoffice/admin/delete, roles: [ROLE_ADMIN] }
+    - { path: ^/backoffice/groupe, roles: [ROLE_ADMIN] }
+    - { path: ^/backoffice/groupe/add, roles: [ROLE_ADMIN] }
+    - { path: ^/backoffice/groupe/edit, roles: [ROLE_ADMIN] }
+    - { path: ^/backoffice/groupe/delete, roles: [ROLE_ADMIN] }
+    - { path: ^/backoffice/module, roles: [ROLE_ADMIN] }
+    - { path: ^/backoffice/module/add, roles: [ROLE_ADMIN] }
+    - { path: ^/backoffice/module/edit, roles: [ROLE_ADMIN] }
+    - { path: ^/backoffice/module/delete, roles: [ROLE_ADMIN] }
+    - { path: ^/backoffice/teacher, roles: [ROLE_ADMIN] }
+    - { path: ^/backoffice/teacher/add, roles: [ROLE_ADMIN] }
+    - { path: ^/backoffice/teacher/edit, roles: [ROLE_ADMIN] }
+    - { path: ^/backoffice/teacher/delete, roles: [ROLE_ADMIN] }
+    - { path: ^/backoffice/home, roles: [ROLE_ADMIN, ROLE_WRITER] }
+    - { path: ^/backoffice/task, roles: [ROLE_ADMIN, ROLE_WRITER] }
     - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
   role_hierarchy:
     ROLE_ADMIN: ROLE_WRITER

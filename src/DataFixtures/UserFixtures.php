@@ -26,7 +26,7 @@ class UserFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        // un boss@gmail.com / boss en ROLE_ADMIN
+        // un yann.garet@etu.univ-poitiers.fr / boss en ROLE_ADMIN
         $user = new User();
         $user->setEmail('yann.garet@etu.univ-poitiers.fr')
             ->setRoles(['ROLE_ADMIN'])
