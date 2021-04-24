@@ -82,4 +82,16 @@ class Teacher
     {
         return $this->name;
     }
+
+    /**
+     * Set the value of modules
+     *
+     * @return  self
+     */ 
+    public function setModules($modules)
+    {
+        $this->modules = $modules;
+
+        return $this;
+    }
 }

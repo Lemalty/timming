@@ -99,9 +99,11 @@ class BackofficeTeacherController extends AbstractController
         $allNewModules = $moduleRepository->findBy(['id' => $request->request->get('module')]);
 
         // on ajoute les modules 1 par 1
-        foreach($allNewModules as $newModule) {
-            $teacher->addModule($newModule);
-        }
+        // foreach($allNewModules as $newModule) {
+        //     $teacher->addModule($newModule);
+        // }
+
+        $teacher->setModules($allNewModules);
 
 
         // persister l'entité
