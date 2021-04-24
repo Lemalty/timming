@@ -42,18 +42,28 @@ class BackofficeModuleController extends AbstractController
     public function save(EntityManagerInterface $em, Request $request, TeacherRepository $teacherRepository)
     {
         $module = new Module();
-                // renseigner les informations
-                $module->setName($request->request->get('name'))
-                ->setCampain($request->request->get('campain'))
-                ->setYear($request->request->get('year'));
+            // renseigner les informations
+            $module->setName($request->request->get('name'))
+            ->setCampain($request->request->get('campain'))
+            ->setYear($request->request->get('year'));
         
-                // on récupère les modules selectionnés
-                $allNewTeachers = $teacherRepository->findBy(['id' => $request->request->get('teacher')]);
+            $newTeacher = $request->request->get('teacher');
+            $newTeacher = $teacherRepository->findOneBy(['id' => $newTeacher]);
         
-                // on ajoute les modules 1 par 1
-                foreach($allNewTeachers as $newTeacher) {
-                    $module->addTeacher($newTeacher);
+            $error = false;
+        
+            foreach($module->getTeachers() as $teacher) {
+                $error = false;
+                    
+                    if($teacher->getName() === $newTeacher->getName()) {
+                    $error = true;
+                    break;
                 }
+            }
+        
+            if($error === false) {
+            $module->addTeacher($newTeacher);
+        }
 
         // persister l'entité
         $em->persist($module);
@@ -87,12 +97,22 @@ class BackofficeModuleController extends AbstractController
         ->setCampain($request->request->get('campain'))
         ->setYear($request->request->get('year'));
 
-        // on récupère les modules selectionnés
-        $allNewTeachers = $teacherRepository->findBy(['id' => $request->request->get('teacher')]);
+        $newTeacher = $request->request->get('teacher');
+        $newTeacher = $teacherRepository->findOneBy(['id' => $newTeacher]);
 
-        // on ajoute les modules 1 par 1
-        foreach($allNewTeachers as $newTeacher) {
-            $module->addTeacher($newTeacher);
+        $error = false;
+
+            foreach($module->getTeachers() as $teacher) {
+                $error = false;
+            
+                if($teacher->getName() === $newTeacher->getName()) {
+                    $error = true;
+                    break;
+                }
+            }
+
+        if($error === false) {
+        $module->addTeacher($newTeacher);
         }
 
 

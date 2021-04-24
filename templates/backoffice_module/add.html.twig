@@ -31,7 +31,7 @@
   <div class="form-group row">
     <label class="col-2 col-form-label">Enseignant(s) associé(s) :</label>
     <div class="col-8">
-      <select name="teacher" class="form-select" multiple>
+      <select name="teacher" class="form-select">
         {% for teacher in teachers %}
         <option value='{{ teacher.id }}'> {{ teacher.name }}</option>
         {% endfor %}

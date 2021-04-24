@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Module;
 use App\Entity\Teacher;
 use App\Repository\GroupRepository;
 use App\Repository\ModuleRepository;
@@ -45,12 +46,22 @@ class BackofficeTeacherController extends AbstractController
         // renseigner les informations
         $teacher->setName($request->request->get('name'));
 
-        // on récupère les modules selectionnés
-        $allNewModules = $moduleRepository->findBy(['id' => $request->request->get('module')]);
+        $newModule = $request->request->get('module');
+        $newModule = $moduleRepository->findOneBy(['id' => $newModule]);
 
-        // on ajoute les modules 1 par 1
-        foreach($allNewModules as $newModule) {
-            $teacher->addModule($newModule);
+        $error = false;
+
+            foreach($teacher->getModules() as $module) {
+                $error = false;
+            
+                if($module->getName() === $newModule->getName()) {
+                    $error = true;
+                    break;
+                }
+            }
+
+        if($error === false) {
+        $teacher->addModule($newModule);
         }
 
 
@@ -89,25 +100,42 @@ class BackofficeTeacherController extends AbstractController
         }
 
         else{
-        $teacher = new Teacher();
+            $teacher = new Teacher();
 
-        $teacher = $teacherRepository->find($id);
-        // renseigner les informations
-        $teacher->setName($request->request->get('name'));
+            $teacher = $teacherRepository->find($id);
+            // renseigner les informations
+            $teacher->setName($request->request->get('name'));
+            
+            $newModule = $request->request->get('module');
+            $newModule = $moduleRepository->findOneBy(['id' => $newModule]);
+
+            $error = false;
+
+                foreach($teacher->getModules() as $module) {
+                    $error = false;
+                
+                    if($module->getName() === $newModule->getName()) {
+                        $error = true;
+                        break;
+                    }
+                }
+
+            if($error === false) {
+            $teacher->addModule($newModule);
+            }
+
+            
+            // persister l'entité
+            $em->persist($teacher);
+            // déclencher le traitements SQL
+            $em->flush();
+            // redirection
+            return $this->redirectToRoute('backoffice_teacher_index');
+        }
+    }
+
+
         
-        $newModule = $request->request->get('modules');
-
-        $teacher->addModule($newModule);
-    }
-
-
-        // persister l'entité
-        $em->persist($teacher);
-        // déclencher le traitements SQL
-        $em->flush();
-        // redirection
-        return $this->redirectToRoute('backoffice_teacher_index');
-    }
 
     /**
      * @Route("/backoffice/teacher/delete/{id}", name="backoffice_teacher_delete")
